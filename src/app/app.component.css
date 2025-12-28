@@ -1,0 +1,247 @@
+/* Grund-Layout */
+.main-container {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #eef2f7;
+  padding: 20px;
+}
+
+/* Login Karte */
+.login-card {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.sun-decoration { font-size: 3rem; margin-bottom: 10px; }
+
+/* Dashboard & Inputs */
+.app-content { width: 100%; max-width: 600px; }
+
+.glass-panel {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.input-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.input-field label {
+  display: block;
+  font-size: 0.75rem;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 0.9rem;
+}
+
+/* Buttons */
+button {
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+  border: none;
+}
+
+.primary-btn, .fetch-btn {
+  background: #3498db;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.fetch-btn { background: #2ecc71; font-size: 1rem; }
+.fetch-btn:hover { background: #27ae60; }
+
+.logout-btn {
+  background: #95a5a6;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 5px;
+  font-size: 0.8rem;
+}
+
+.header-actions { display: flex; justify-content: flex-end; margin-bottom: 10px; }
+
+/* Sonnendaten Karte (Gradient) */
+.sun-card {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  color: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.info-grid {
+  display: flex;
+  justify-content: space-around;
+  margin: 25px 0;
+}
+
+.info-item { display: flex; align-items: center; gap: 12px; }
+.sun-icon { font-size: 2.5rem; }
+
+.text-group label { display: block; font-size: 0.8rem; opacity: 0.8; }
+.text-group strong { font-size: 1.3rem; }
+
+.footer {
+  text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.3);
+  padding-top: 15px;
+}
+
+.location-selector {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.location-selector label {
+  display: block;
+  font-size: 0.8rem;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.location-selector select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  font-size: 1rem;
+  cursor: pointer;
+  outline: none;
+}
+
+.location-selector select:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.2);
+}
+
+.add-location-box {
+  margin-top: 20px;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 15px;
+  border-radius: 12px;
+}
+
+.input-row {
+  display: flex;         /* Richtet alles in einer Zeile aus */
+  flex-wrap: wrap;       /* Verhindert Umbruch, außer der Platz reicht gar nicht */
+  gap: 10px;             /* Abstand zwischen den Feldern */
+  align-items: center;   /* Alle auf gleicher Höhe */
+}
+
+.form-input {
+  font-family: inherit;  /* Übernimmt die Schrift der App */
+  font-size: 14px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  height: 38px;          /* Einheitliche Höhe für alle Browser */
+  box-sizing: border-box;
+}
+
+/* Speziell für das Datumsfeld, falls es im Browser noch anders aussieht */
+.date-field {
+  appearance: none;      /* Entfernt Browser-spezifische Schatten */
+  -webkit-appearance: none;
+}
+
+.input-row input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  min-width: 120px;
+}
+
+.add-btn {
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.add-btn:hover {
+  background-color: #2ecc71;
+}
+
+.add-btn:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+}
+
+.location-list-box {
+  margin-top: 20px;
+}
+
+.location-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.location-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.location-item:last-child {
+  border-bottom: none;
+}
+
+.loc-info strong {
+  display: block;
+  font-size: 1rem;
+}
+
+.loc-info span {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.delete-btn:hover {
+  background-color: #ffebee;
+}
+
+.footer span { font-weight: bold; font-size: 1.1rem; }

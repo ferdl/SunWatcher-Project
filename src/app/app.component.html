@@ -1,0 +1,110 @@
+<div class="main-container">
+
+  <div *ngIf="!isLoggedIn()" class="login-card">
+    <div class="sun-decoration">☀️</div>
+    <h1>Willkommen</h1>
+    <p>Bitte melde dich an, um die Sonnendaten abzurufen.</p>
+
+    <div class="input-group">
+      <input [(ngModel)]="username" placeholder="Benutzername">
+      <input [(ngModel)]="password" type="password" placeholder="Passwort">
+      <button class="primary-btn" (click)="onLogin()">Einloggen</button>
+    </div>
+  </div>
+
+  <div *ngIf="isLoggedIn()" class="app-content">
+
+    <div class="header-actions">
+      <button class="logout-btn" (click)="onLogout()">Abmelden</button>
+    </div>
+
+    <div class="glass-panel">
+      <h1>Sonnen-Planer ☀️</h1>
+
+      <div class="location-selector">
+        <label>Gespeicherte Orte wählen:</label>
+        <select (change)="onLocationSelected($event)">
+          <option value="" disabled selected>-- Bitte einen Ort wählen --</option>
+
+          <option *ngFor="let loc of locations()" [value]="loc.name">
+            {{ loc.name }}
+          </option>
+
+        </select>
+      </div>
+      <div class="glass-panel add-location-box">
+        <h3>📍 Neuen Ort hinzufügen</h3>
+        <div class="input-row">
+          <input [(ngModel)]="newLocName" placeholder="Name (z.B. London)">
+          <input [(ngModel)]="newLocLat" placeholder="Breitengrad">
+          <input [(ngModel)]="newLocLng" placeholder="Längengrad">
+          <input
+            type="date"
+            [(ngModel)]="date"
+            (change)="onDateChange()"
+            class="form-input date-field"
+          >
+          <button class="add-btn" (click) ="addLocation()" [disabled]="!newLocName">Speichern</button>
+        </div>
+      </div>
+      <div class="glass-panel location-list-box">
+        <h3>📋 Orte verwalten</h3>
+        <ul class="location-list">
+          <li *ngFor="let loc of locations()" class="location-item">
+            <div class="loc-info">
+              <strong>{{ loc.name }}</strong>
+              <span>({{ loc.lat }}, {{ loc.lng }})</span>
+            </div>
+            <button class="delete-btn" (click)="deleteLocation(loc.id)">
+              🗑️
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <p class="subtitle">Oder Koordinaten manuell anpassen:</p>
+
+      <div class="input-grid">
+        <div class="input-field">
+          <label>Breitengrad</label>
+          <input [(ngModel)]="lat" placeholder="z.B. 48.20">
+        </div>
+        <div class="input-field">
+          <label>Längengrad</label>
+          <input [(ngModel)]="lng" placeholder="z.B. 16.37">
+        </div>
+      </div>
+
+      <button class="fetch-btn" (click)="loadData()">Daten jetzt abrufen</button>
+    </div>
+
+    <div *ngIf="sunData()" class="sun-card">
+      <div class="card-header">
+        <h2>Ergebnisse für deine Auswahl</h2>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="sun-icon">🌅</span>
+          <div class="text-group">
+            <label>Sonnenaufgang</label>
+            <strong>{{ sunData().sunrise }} Uhr</strong>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <span class="sun-icon">🌇</span>
+          <div class="text-group">
+            <label>Sonnenuntergang</label>
+            <strong>{{ sunData().sunset }} Uhr</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <p>Die Tageslänge beträgt: <strong>{{ sunData().dayLength }}</strong></p>
+      </div>
+    </div>
+
+  </div>
+</div>
