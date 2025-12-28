@@ -1,0 +1,35 @@
+services:
+  db:
+    image: postgres:15
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: sundb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build: ./SunService
+    container_name: sun_backend
+    depends_on:
+      - db    
+    environment:
+      - DB_HOST=db  # Innerhalb von Docker heißt der Host 'db'
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/sundb  
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=password
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build: ./sun-watcher-frontend
+    container_name: sun_frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+# Dieser Teil hat gefehlt und den Fehler verursacht:
+volumes:
+  postgres_data:
