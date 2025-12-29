@@ -25,8 +25,8 @@ public class ContactController {
 
         try {
             SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom("deine.gmail.adresse@gmail.com"); // Muss bei Gmail oft mit dem Account übereinstimmen
-            message.setTo("nina@fotografie-nina.at");
+            message.setFrom("ferry.juraczka@gmail.com"); // Muss bei Gmail oft mit dem Account übereinstimmen
+            message.setTo("ferdinand.juraczka@kapdion.com");
             message.setSubject("Neue Nachricht von " + request.getName());
             message.setText("Inhalt:\n" + request.getMessage() + "\n\nAntwort an: " + request.getEmail());
 
