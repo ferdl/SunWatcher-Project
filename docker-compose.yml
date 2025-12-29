@@ -27,6 +27,10 @@ services:
     container_name: sun_frontend
     ports:
       - "80:80"
+      - "443:443" # HTTPS Port hinzufügen
+    volumes:
+      # Zertifikate vom Server in den Container spiegeln (nur Leserechte)
+      - /etc/letsencrypt:/etc/letsencrypt:ro
     depends_on:
       - backend
 
