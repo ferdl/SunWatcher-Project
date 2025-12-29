@@ -16,7 +16,7 @@ public class SunServiceApplication {
 
         // 1. Verbindungseinstellungen
         mailSender.setHost("smtp.gmail.com");
-        mailSender.setPort(587);
+        mailSender.setPort(465);
 
         // 2. Zugangsdaten
         // Ersetze dies durch deine Gmail-Adresse
