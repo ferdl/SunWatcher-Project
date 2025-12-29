@@ -51,7 +51,7 @@ public class SecurityConfig {
                 // 3. Die Berechtigungen festlegen
                 .authorizeHttpRequests(auth -> auth
                         // Dieser Pfad MUSS für alle ohne Token erlaubt sein:
-                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/auth/**", "/api/contact").permitAll()
                         // Alle anderen Pfade (wie /api/sun) erfordern einen Token:
                         .anyRequest().authenticated()
                 )
