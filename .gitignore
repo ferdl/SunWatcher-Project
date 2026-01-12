@@ -1,15 +1,10 @@
-# Default ignored files
-/shelf/
-/.idea/workspace.xml
-# Ignored default folder with query files
-/queries/
-# Datasource local storage ignored files
-/dataSources/
-/dataSources.local.xml
-# Editor-based HTTP Client requests
-/httpRequests/
+#
 .env
-docker-compose.yml
-.idea/
-target/
+# docker-compose.yml  <-- Entferne dies aus dem ignore, falls du sie teilen willst!
+
+# IDE und Build
+/.idea/
+/target/
 *.class
+/shelf/
+certs_local/
