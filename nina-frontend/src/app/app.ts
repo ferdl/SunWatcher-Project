@@ -32,6 +32,9 @@ export class App implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
+    // 1. Zuerst IMMER die Bilder laden (für alle Besucher)
+    this.loadImages();
+
     const token = localStorage.getItem('jwt_token');
     if (token) {
       try {
