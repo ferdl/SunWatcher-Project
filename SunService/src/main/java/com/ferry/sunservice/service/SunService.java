@@ -14,6 +14,9 @@ import java.io.File;
 import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 @Service
 public class SunService {
@@ -53,10 +56,24 @@ public class SunService {
     @Service
     public static class ImageService {
         private static final Logger logger = LoggerFactory.getLogger(ImageService.class);
+        private final String uploadDir = "/app/images/gallery/"; //
+
+        public List<String> getImageFilenames() {
+            File folder = new File(uploadDir);
+            if (!folder.exists() || !folder.isDirectory()) {
+                logger.warn("Galerie-Verzeichnis nicht gefunden: {}", uploadDir);
+                return Collections.emptyList();
+            }
+
+            String[] files = folder.list((dir, name) -> {
+                String lower = name.toLowerCase();
+                return lower.endsWith(".jpg") || lower.endsWith(".jpeg") || lower.endsWith(".png");
+            });
+
+            return files != null ? Arrays.asList(files) : Collections.emptyList();
+        }
 
         public void saveAndScale(MultipartFile file) throws IOException {
-
-            String uploadDir = "/app/images/gallery/";
             File targetFile = new File(uploadDir + file.getOriginalFilename());
 
             // Nutzt Thumbnailator zum Skalieren und Komprimieren
