@@ -2,10 +2,16 @@ package com.ferry.sunservice.service;
 
 import com.ferry.sunservice.dto.SunDto;
 import com.ferry.sunservice.model.SunResponse;
+import net.coobird.thumbnailator.Thumbnails;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -43,5 +49,22 @@ public class SunService {
 
         // 3. Gib das schöne DTO zurück
         return new SunDto(formattedSunrise, formattedSunset, raw.getResults().getDay_length());
+    }
+    @Service
+    public static class ImageService {
+        private static final Logger logger = LoggerFactory.getLogger(ImageService.class);
+
+        public void saveAndScale(MultipartFile file) throws IOException {
+
+            String uploadDir = "/app/images/gallery/";
+            File targetFile = new File(uploadDir + file.getOriginalFilename());
+
+            // Nutzt Thumbnailator zum Skalieren und Komprimieren
+            Thumbnails.of(file.getInputStream())
+                    .size(1200, 1200)       // Maximale Breite/Höhe
+                    .outputQuality(0.8)     // 80% Qualität (reicht für Web völlig aus)
+                    .toFile(targetFile);
+            logger.debug("Bild auf {} skaliert und gespeichert.", targetFile.getAbsolutePath());
+        }
     }
 }

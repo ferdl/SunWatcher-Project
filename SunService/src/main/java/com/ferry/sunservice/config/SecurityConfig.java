@@ -4,8 +4,10 @@ import com.ferry.sunservice.security.JwtFilter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,10 +35,10 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) {
         http
                 // 1. CSRF deaktivieren (wichtig für Stateless APIs)
-                .csrf(csrf -> csrf.disable())
+                .csrf(AbstractHttpConfigurer::disable)
 
                 // 2. CORS konfigurieren (damit Angular von Port 4200 zugreifen darf)
                 .cors(cors -> cors.configurationSource(request -> {
@@ -50,9 +52,20 @@ public class SecurityConfig {
 
                 // 3. Die Berechtigungen festlegen
                 .authorizeHttpRequests(auth -> auth
-                        // Dieser Pfad MUSS für alle ohne Token erlaubt sein:
+                        .requestMatchers("/error").permitAll()
+                        // 1. Preflight-Anfragen immer erlauben
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
+                        // 2. Öffentliche Pfade
                         .requestMatchers("/api/auth/**", "/api/contact").permitAll()
-                        // Alle anderen Pfade (wie /api/sun) erfordern einen Token:
+                        .requestMatchers("/api/images-serve/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/gallery/images").permitAll()
+
+                        // 3. Geschützte Pfade (Explizit für Methoden)
+                        .requestMatchers(HttpMethod.POST, "/api/gallery/upload").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/api/gallery/images/**").authenticated()
+
+                        // 4. Alles andere absichern
                         .anyRequest().authenticated()
                 )
 

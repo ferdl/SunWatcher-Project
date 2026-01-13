@@ -1,4 +1,44 @@
 <div class="welcome-container">
+
+  @if (isAdmin()) {
+    <div class="admin-dashboard">
+      <div class="dashboard-content">
+
+        <button class="btn-logout" (click)="logout()" title="Abmelden">
+          Logout 🚪
+        </button>
+
+        <div class="upload-section">
+          <input type="file" (change)="onFileSelected($event)" accept="image/*" #fileInput hidden>
+
+          @if (!imagePreview()) {
+            <button class="btn-select" (click)="fileInput.click()">📸 Neues Bild für Galerie wählen</button>
+          }
+
+          @if (imagePreview()) {
+            <div class="preview-mini">
+              <img [src]="imagePreview()" alt="Vorschau">
+
+              @if (uploadProgress() !== null) {
+                <div class="mini-progress-wrapper">
+                  <div class="mini-progress-bar" [style.width.%]="uploadProgress()"></div>
+                  <span class="progress-label">{{ uploadProgress() }}%</span>
+                </div>
+              } @else {
+                <div class="preview-btns">
+                  <button class="btn-confirm" (click)="uploadImage()">🚀 Hochladen</button>
+                  <button class="btn-cancel-mini" (click)="cancelPreview()">Abbrechen</button>
+                </div>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="admin-status">Admin Modus</div>
+      </div>
+    </div>
+  }
+
   <header>
     <h1>FOTOGRAFIE NINA</h1>
     <p class="subtitle">Augenblicke für die Ewigkeit festgehalten</p>
@@ -11,21 +51,24 @@
   </section>
 
   <section class="gallery">
-    <div class="gallery-item" (click)="openLightbox('/assets/images/foto1.jpg')">
-      <img src="/assets/images/foto1.jpg" alt="Portfolio Bild 1">
-    </div>
+    @for (imgUrl of images(); track imgUrl) {
+      <div class="gallery-item">
+        <img [src]="imgUrl"
+             (click)="openLightbox(imgUrl)"
+             alt="Portfolio Bild">
 
-    <div class="gallery-item" (click)="openLightbox('/assets/images/foto2.jpg')">
-      <img src="/assets/images/foto2.jpg" alt="Portfolio Bild 2">
-    </div>
-
-    <div class="gallery-item" (click)="openLightbox('/assets/images/foto3.jpg')">
-      <img src="/assets/images/foto3.jpg" alt="Portfolio Bild 3">
-    </div>
-
-    <div class="gallery-item" (click)="openLightbox('/assets/images/foto4.jpg')">
-      <img src="/assets/images/foto4.jpg" alt="Portfolio Bild 4">
-    </div>
+        @if (isAdmin()) {
+          <button
+            (click)="deleteImage(imgUrl); $event.stopPropagation()"
+            class="delete-overlay-btn"
+            title="Bild löschen">
+            🗑️
+          </button>
+        }
+      </div>
+    } @empty {
+      <p class="empty-msg">Aktuell sind keine Bilder in der Galerie vorhanden.</p>
+    }
   </section>
 
   <section class="contact-section">
@@ -48,16 +91,31 @@
   </section>
 
   <footer>
-    <p>&copy; 2025 Fotografie Nina | <a href="#">Kontakt & Impressum</a></p>
+    <p>&copy; 2026 Fotografie Nina | <a href="#">Kontakt & Impressum</a></p>
   </footer>
+
 </div>
 
-<div class="lightbox-overlay" *ngIf="selectedImage" (click)="closeLightbox()">
+@if (selectedImage) {
+  <div class="lightbox-overlay" (click)="closeLightbox()">
+    <button class="close-btn" (click)="closeLightbox()">&times;</button>
+    <img [src]="selectedImage"
+         class="lightbox-image"
+         alt="Vergrößerte Ansicht"
+         (click)="$event.stopPropagation()">
+  </div>
+}
 
-  <button class="close-btn" (click)="closeLightbox()">&times;</button>
+@if (toastMessage()) {
+  <div class="toast-container">
+    <div class="toast-content"
+         [class.success]="toastType() === 'success'"
+         [class.error]="toastType() === 'error'">
 
-  <img [src]="selectedImage"
-       class="lightbox-image"
-       alt="Vergrößerte Ansicht"
-       (click)="$event.stopPropagation()">
-</div>
+      @if (toastType() === 'success') { <span>✅</span> }
+      @else { <span>❌</span> }
+
+      {{ toastMessage() }}
+    </div>
+  </div>
+}
