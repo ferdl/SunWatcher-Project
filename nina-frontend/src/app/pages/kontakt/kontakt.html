@@ -1,0 +1,66 @@
+<div class="page-container">
+  <section class="page-header">
+    <h2>Kontakt & Anfrage</h2>
+    <p class="subtitle">Ich freue mich darauf, von euch zu hören!</p>
+    <p>
+      Egal ob für ein Newborn-, Babybauch-, Familien- oder Kindergarten-Shooting – schreibt mir gerne euer Wunschdatum und eure Vorstellungen.
+    </p>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="contact-wrapper">
+    <!-- Erfolgsmeldung -->
+    @if (submitSuccess() === true) {
+      <div class="alert alert-success">
+        Vielen Dank für deine Nachricht! Ich werde mich so schnell wie möglich bei dir melden.
+      </div>
+    }
+
+    <!-- Fehlermeldung -->
+    @if (submitSuccess() === false) {
+      <div class="alert alert-error">
+        Es gab leider ein Problem beim Senden deiner Anfrage. Bitte versuche es später noch einmal oder schreibe mir direkt per E-Mail.
+      </div>
+    }
+
+    <form (ngSubmit)="onSubmit()" #contactForm="ngForm" class="contact-form">
+      <div class="form-group">
+        <label for="name">Dein Name *</label>
+        <input type="text" id="name" [(ngModel)]="formData.name" name="name" required #nameInput="ngModel">
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="email">E-Mail-Adresse *</label>
+          <input type="email" id="email" [(ngModel)]="formData.email" name="email" required email #emailInput="ngModel">
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Telefonnummer</label>
+          <input type="tel" id="phone" [(ngModel)]="formData.phone" name="phone">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="shootingType">Art des Shootings *</label>
+        <select id="shootingType" [(ngModel)]="formData.shootingType" name="shootingType">
+          <option value="Newborn">Newbornshooting</option>
+          <option value="Babybauch">Babybauchshooting</option>
+          <option value="Familie">Kinder- & Familienfotografie</option>
+          <option value="Kindergarten">Kindergartenfotografie</option>
+          <option value="Sonstiges">Sonstige Anfrage</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="message">Deine Nachricht / Wunschtermin *</label>
+        <textarea id="message" rows="5" [(ngModel)]="formData.message" name="message" required></textarea>
+      </div>
+
+      <button type="submit" [disabled]="!contactForm.form.valid || isSubmitting()" class="cta-button">
+        {{ isSubmitting() ? 'Wird gesendet...' : 'Anfrage absenden' }}
+      </button>
+    </form>
+  </section>
+</div>

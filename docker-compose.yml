@@ -7,7 +7,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=sundb
     ports:
-      - "5432:5432"
+      - "5432:5432" # <-- Hier NUR 5432 belassen, 8080 hier entfernen!
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -22,13 +22,17 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    ports:
+      - "8080:8080" # <-- Hier muss "8080:8080" stehen!
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/sundb
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD}
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-      - APP_CORS_ALLOWED_ORIGINS=https://sauerburg.at,https://www.sauerburg.at,https://fotografie-nina.at,https://www.fotografie-nina.at,https://sauerburg.at.127.0.0.1.nip.io:8443,https://www.sauerburg.at.127.0.0.1.nip.io:8443,https://fotografie-nina.at.127.0.0.1.nip.io:8443,https://www.fotografie-nina.at.127.0.0.1.nip.io:8443,http://localhost,http://localhost:4200
+      - APP_CORS_ALLOWED_ORIGINS=https://sauerburg.at,https://www.sauerburg.at,https://fotografie-nina.at,https://www.fotografie-nina.at,https://sauerburg.at.127.0.0.1.nip.io:8443,https://www.sauerburg.at.127.0.0.1.nip.io:8443,https://fotografie-nina.at.127.0.0.1.nip.io:8443,https://www.fotografie-nina.at.127.0.0.1.nip.io:8443,http://localhost,http://localhost:4200,http://localhost:4201
       - MAIL_PASSWORD=${MAIL_PASSWORD}
+      - # Überschreibt die Zieladresse im Container / Server auf Nina:
+      - CONTACT_MAIL_RECIPIENT=nina.maierhofer@gmx.at
     volumes:
       - ./gallery-images:/app/images/gallery
 

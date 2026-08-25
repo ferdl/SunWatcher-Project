@@ -1,0 +1,74 @@
+<div class="page-container">
+  <section class="page-header">
+    <h2>Einzigartige Babybauch-Shootings</h2>
+    <p class="subtitle">Erinnerungen an eine besondere Zeit</p>
+
+    <p class="intro-quote">
+      Neun Monate voller Vorfreude, Veränderungen und Erwartungen auf ein kleines neues Leben.
+    </p>
+
+    <p>
+      Viele werdende Mamas spüren in dieser Zeit eine ganz besondere Verbindung zu ihrem Baby. Genau diese leisen, kostbaren Gefühle möchte ich mit meinen Bildern festhalten.
+    </p>
+    <p>
+      Bei einem Babybauchshooting in meinem Studio in St. Andrä-Wördern bei Tulln oder draußen in der Natur entstehen natürliche und emotionale Erinnerungen an diese einzigartige Phase. Bilder voller Wärme und Liebe – ein wertvoller Schatz für euer ganzes Leben.
+    </p>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="info-grid">
+    <div class="info-box">
+      <h3>Der ideale Zeitpunkt</h3>
+      <p>
+        Der beste Zeitpunkt für das Shooting liegt meist zwischen der <strong>28. und 34. Schwangerschaftswoche</strong>.
+      </p>
+      <p>
+        In dieser Phase ist der Bauch bereits schön rund und kommt auf den Bildern besonders gut zur Geltung, während du dich meist noch wohl und beweglich genug fühlst.
+      </p>
+    </div>
+
+    <div class="info-box">
+      <h3>Studio oder Outdoor</h3>
+      <p>
+        Das Shooting kann in meinem Studio in St. Andrä-Wördern oder draußen in der Natur stattfinden.
+      </p>
+      <p>
+        Besonders Outdoor-Shootings sind beliebt für sehr natürliche Bilder. Partner und Geschwisterkinder dürfen selbstverständlich gerne dabei sein.
+      </p>
+    </div>
+
+    <div class="info-box">
+      <h3>Kleider & Outfits</h3>
+      <p>
+        In meinem Studio steht dir eine Auswahl an wunderschönen <strong>Babybauchkleidern</strong> in verschiedenen Größen kostenfrei zur Verfügung.
+      </p>
+      <p>
+        Gerne kannst du auch eigene Lieblingsoutfits mitbringen. Ich berate dich vorab zu harmonischen Farbkombinationen.
+      </p>
+    </div>
+  </section>
+
+  <!-- Galerie Section -->
+  <section class="gallery-section">
+    <h3>Galerie – Babybauch</h3>
+    <div class="gallery-grid">
+      @for (img of images(); track img) {
+        <div class="gallery-item" (click)="openLightbox(img)">
+          <img [src]="'/api/images-serve/' + img" [alt]="img" loading="lazy">
+        </div>
+      }
+    </div>
+
+    @if (selectedImage()) {
+      <div class="lightbox-overlay" (click)="closeLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img [src]="'/api/images-serve/' + selectedImage()" class="lightbox-img" (click)="$event.stopPropagation()">
+      </div>
+    }
+  </section>
+
+  <div class="cta-wrapper">
+    <a routerLink="/kontakt" class="cta-button">Termin für ein Babybauchshooting anfragen</a>
+  </div>
+</div>

@@ -1,0 +1,112 @@
+<div class="page-container">
+  <section class="page-header">
+    <h2>Die ersten Tage – ein kleines Wunder</h2>
+    <p class="intro-quote">
+      Die ersten Tage mit eurem Baby sind eine ganz besondere Zeit. Alles ist neu, zart und voller Emotionen. Kleine Händchen, winzige Füßchen und dieser besondere Zauber eines Neugeborenen – Momente, die viel zu schnell vergehen.
+    </p>
+    <p>
+      Mit viel Geduld und Ruhe halte ich diese ersten Augenblicke für euch fest. Bei einem Newbornshooting in meinem Studio in St. Andrä-Wördern bei Tulln entstehen liebevolle und zeitlose Bilder eures Babys – Erinnerungen, die euch ein Leben lang begleiten.
+    </p>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="info-grid">
+    <div class="info-box">
+      <h3>Der beste Zeitpunkt</h3>
+      <p>
+        Der ideale Zeitpunkt liegt meist innerhalb der <strong>ersten 10 bis 14 Lebenstage</strong>. In dieser Zeit schlafen Babys noch sehr viel und lassen sich besonders entspannt fotografieren.
+      </p>
+      <p>
+        Am besten meldet ihr euch bereits während der Schwangerschaft, damit ich euch rund um euren Geburtstermin einen Platz freihalten kann.
+      </p>
+    </div>
+
+    <div class="info-box">
+      <h3>Ruhige & sichere Atmosphäre</h3>
+      <p>
+        Das Shooting findet in meinem gemütlichen Studio in St. Andrä-Wördern statt. Mit viel Erfahrung, Geduld und einem sicheren Umgang mit Neugeborenen entstehen natürliche Bilder – ganz ohne Stress.
+      </p>
+      <p>Sehr gerne entstehen neben den Babybildern auch Familienbilder mit Eltern und Geschwistern.</p>
+    </div>
+
+    <div class="info-box">
+      <h3>Kleidung & Vorbereitung</h3>
+      <p>
+        Für das Shooting stehen verschiedene Decken, Tücher und Accessoires zur Verfügung. Für Eltern und Geschwister empfehlen sich ruhige, helle Farben ohne große Muster.
+      </p>
+    </div>
+  </section>
+
+  <div class="cta-wrapper">
+    <a routerLink="/kontakt" class="cta-button">Termin für ein Newbornshooting anfragen</a>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- FAQ Akkordeon -->
+  <section class="faq-section">
+    <h3>Häufige Fragen zum Newbornshooting (FAQ)</h3>
+
+    <div class="faq-list">
+      <details>
+        <summary>Wann sollten wir ein Newbornshooting buchen?</summary>
+        <p>Am besten meldet ihr euch bereits während der Schwangerschaft bei mir. So kann ich rund um euren Geburtstermin einen Platz für euch freihalten.</p>
+      </details>
+
+      <details>
+        <summary>Wann findet das Shooting statt?</summary>
+        <p>Der ideale Zeitpunkt liegt meist innerhalb der ersten 14 Lebenstage, da Babys in dieser Zeit noch sehr viel schlafen und sich besonders entspannt fotografieren lassen.</p>
+      </details>
+
+      <details>
+        <summary>Was passiert, wenn unser Baby nicht schläft?</summary>
+        <p>Das ist überhaupt kein Problem. Jedes Baby ist anders und wir richten uns ganz nach eurem kleinen Wunder. Mit viel Geduld und Ruhe entstehen auch wache Bilder, die genauso schön sind.</p>
+      </details>
+
+      <details>
+        <summary>Wie lange dauert ein Newbornshooting?</summary>
+        <p>Ein Newbornshooting dauert in der Regel etwa 2 bis 3 Stunden. Diese Zeit brauchen wir, damit genügend Raum für Stillpausen, Wickeln und Kuscheln bleibt.</p>
+      </details>
+
+      <details>
+        <summary>Müssen wir etwas zum Shooting mitbringen?</summary>
+        <p>Für euer Baby ist im Studio alles vorhanden – Decken, Tücher und Accessoires. Für Eltern und Geschwister empfehlen sich helle, ruhige Farben ohne große Muster.</p>
+      </details>
+
+      <details>
+        <summary>Sind auch Familienbilder möglich?</summary>
+        <p>Sehr gerne. Neben den Babybildern entstehen auch liebevolle Familienbilder mit Eltern und Geschwistern.</p>
+      </details>
+
+      <details>
+        <summary>Was passiert, wenn unser Baby früher oder später geboren wird?</summary>
+        <p>Das ist ganz normal und überhaupt kein Problem. Sobald euer Baby geboren ist, vereinbaren wir gemeinsam den genauen Termin.</p>
+      </details>
+
+      <details>
+        <summary>Ist ein Newbornshooting für mein Baby sicher?</summary>
+        <p>Die Sicherheit und das Wohlbefinden eures Babys stehen für mich immer an erster Stelle. Euer Baby wird niemals in eine Position gebracht, die ihm unangenehm ist.</p>
+      </details>
+    </div>
+  </section>
+</div>
+<div class="divider"></div>
+
+<section class="gallery-section">
+  <h3>Galerie – Newborn</h3>
+  <div class="gallery-grid">
+    @for (img of images(); track img) {
+      <div class="gallery-item" (click)="openLightbox(img)">
+        <img [src]="'/api/images-serve/' + img" [alt]="img" loading="lazy">
+      </div>
+    }
+  </div>
+
+  @if (selectedImage()) {
+    <div class="lightbox-overlay" (click)="closeLightbox()">
+      <span class="lightbox-close">&times;</span>
+      <img [src]="'/api/images-serve/' + selectedImage()" class="lightbox-img" (click)="$event.stopPropagation()">
+    </div>
+  }
+</section>

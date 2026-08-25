@@ -12,11 +12,15 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class SunService {
@@ -37,8 +41,9 @@ public class SunService {
         // Ruft die API auf und wandelt JSON automatisch in unsere Java-Klasse um
         return restTemplate.getForObject(url, SunResponse.class);
     }
+
     public SunDto getFormattedSunData(String lat, String lng, String date) {
-        // 1. Hol dir die Rohdaten (deine bisherige Methode)
+        // 1. Hol dir die Rohdaten
         SunResponse raw = getSunData(lat, lng, date);
 
         // 2. Formatiere die Zeiten
@@ -50,27 +55,38 @@ public class SunService {
                 .withZoneSameInstant(java.time.ZoneId.of("Europe/Berlin"))
                 .format(formatter);
 
-        // 3. Gib das schöne DTO zurück
+        // 3. Gib das DTO zurück
         return new SunDto(formattedSunrise, formattedSunset, raw.getResults().getDay_length());
     }
+
     @Service
     public static class ImageService {
         private static final Logger logger = LoggerFactory.getLogger(ImageService.class);
-        private final String uploadDir = "/app/images/gallery/"; //
+        private final String uploadDir = "/app/images/gallery/";
 
         public List<String> getImageFilenames() {
-            File folder = new File(uploadDir);
-            if (!folder.exists() || !folder.isDirectory()) {
+            Path rootPath = Paths.get(uploadDir);
+            if (!Files.exists(rootPath) || !Files.isDirectory(rootPath)) {
                 logger.warn("Galerie-Verzeichnis nicht gefunden: {}", uploadDir);
                 return Collections.emptyList();
             }
 
-            String[] files = folder.list((dir, name) -> {
-                String lower = name.toLowerCase();
-                return lower.endsWith(".jpg") || lower.endsWith(".jpeg") || lower.endsWith(".png");
-            });
-
-            return files != null ? Arrays.asList(files) : Collections.emptyList();
+            // Files.walk liest auch alle Unterordner (babybauch, familie, etc.) rekursiv ein
+            try (Stream<Path> stream = Files.walk(rootPath)) {
+                return stream
+                        .filter(Files::isRegularFile)
+                        .filter(path -> {
+                            String lower = path.getFileName().toString().toLowerCase();
+                            return lower.endsWith(".jpg") || lower.endsWith(".jpeg") || lower.endsWith(".png") || lower.endsWith(".webp");
+                        })
+                        .map(rootPath::relativize)
+                        .map(Path::toString)
+                        .map(p -> p.replace("\\", "/")) // Für Windows-Kompatibilität Pfadtrenner vereinheitlichen
+                        .collect(Collectors.toList());
+            } catch (Exception e) {
+                logger.error("Fehler beim Lesen der Galeriebilder aus allen Ordnern: {}", e.getMessage(), e);
+                return Collections.emptyList();
+            }
         }
 
         public void saveAndScale(MultipartFile file) throws IOException {
@@ -79,7 +95,7 @@ public class SunService {
             // Nutzt Thumbnailator zum Skalieren und Komprimieren
             Thumbnails.of(file.getInputStream())
                     .size(1200, 1200)       // Maximale Breite/Höhe
-                    .outputQuality(0.8)     // 80% Qualität (reicht für Web völlig aus)
+                    .outputQuality(0.8)     // 80% Qualität
                     .toFile(targetFile);
             logger.debug("Bild auf {} skaliert und gespeichert.", targetFile.getAbsolutePath());
         }

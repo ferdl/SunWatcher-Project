@@ -1,0 +1,66 @@
+.page-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: left;
+}
+
+.subtitle {
+  color: #888;
+  font-size: 1rem;
+  margin-top: -10px;
+  margin-bottom: 20px;
+}
+
+.impressum-card {
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-left: 4px solid #d4af37;
+  padding: 25px;
+  border-radius: 6px;
+  margin-bottom: 30px;
+}
+
+.impressum-card h3 {
+  margin-top: 0;
+  margin-bottom: 4px;
+  color: #333;
+  font-size: 1.3rem;
+}
+
+.legal-form {
+  color: #777;
+  font-style: italic;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.info-block {
+  margin-bottom: 16px;
+  line-height: 1.5;
+  color: #444;
+}
+
+.info-block a {
+  color: #d4af37;
+  text-decoration: none;
+}
+
+.info-block a:hover {
+  text-decoration: underline;
+}
+
+.impressum-notice {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.6;
+}
+
+.impressum-notice h4 {
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.impressum-notice a {
+  color: #d4af37;
+}

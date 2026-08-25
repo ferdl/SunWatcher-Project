@@ -1,0 +1,92 @@
+<div class="home-container">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <blockquote class="hero-quote">
+      „Die ersten Tage mit eurem Baby, ein runder Babybauch oder das fröhliche Lachen eurer Kinder – ich halte diese besonderen Momente für euch fest.“
+    </blockquote>
+
+    <div class="intro-text">
+      <p>Als Fotografin für Newborn-, Babybauch-, Kinder- und Familienfotografie in St. Andrä-Wördern bei Tulln ist es mein Ziel, die besonderen Momente eurer Familie für immer festzuhalten.</p>
+      <p>Die ersten Tage mit einem Baby, ein runder Babybauch oder das fröhliche Lachen eurer Kinder – all diese Augenblicke sind einzigartig und oft viel zu schnell vergangen.</p>
+      <p>Mit viel Ruhe, Geduld und einem liebevollen Blick für Details entstehen Bilder, die eure Familie so zeigen, wie sie wirklich ist: natürlich, emotional und zeitlos.</p>
+      <p>In meinem Studio in St. Andrä-Wördern – und bei Babybauch- oder Familienshootings auch gerne draußen in der Natur – entstehen Erinnerungen, die euch auch viele Jahre später noch berühren.</p>
+    </div>
+
+    <a routerLink="/kontakt" class="cta-button">Jetzt Shooting anfragen</a>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Schwerpunkte -->
+  <section class="services-overview">
+    <h2>Meine Schwerpunkte</h2>
+    <p class="section-subtitle">Du und deine Lieben im Fokus</p>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <h3>Newbornfotografie</h3>
+        <p>Die ersten Tage eines neuen Lebens sind einzigartig. In ruhiger und liebevoller Atmosphäre entstehen zarte Bilder eures Babys.</p>
+        <a routerLink="/newborn" class="service-link">Mehr zu Newborn &rarr;</a>
+      </div>
+
+      <div class="service-card">
+        <h3>Babybauchfotografie</h3>
+        <p>Die Schwangerschaft ist eine besondere Phase voller Vorfreude. Diese einzigartige Zeit halte ich in emotionalen Bildern fest.</p>
+        <a routerLink="/babybauch" class="service-link">Mehr zu Babybauch &rarr;</a>
+      </div>
+
+      <div class="service-card">
+        <h3>Kinder- & Familienfotografie</h3>
+        <p>Kinderlachen, Umarmungen und echte Momente – daraus entstehen lebendige Familienbilder, die eure Verbindung zeigen.</p>
+        <a routerLink="/familie" class="service-link">Mehr zu Familie &rarr;</a>
+      </div>
+
+      <div class="service-card">
+        <h3>Kindergartenfotografie</h3>
+        <p>Moderne Kindergartenfotografie mit unkompliziertem Hybridsystem für Eltern – ganz ohne Aufwand für Pädagog:innen.</p>
+        <a routerLink="/kindergarten" class="service-link">Mehr zu Kindergarten &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Galerie Section -->
+  <div class="divider"></div>
+
+  <!-- Einblicke / Zufalls-Zeile -->
+  <section class="gallery-section">
+    <h3>Einblicke in meine Arbeiten</h3>
+    <div class="gallery-grid single-row">
+      @for (img of randomImages(); track img) {
+        <div class="gallery-item" (click)="openLightbox(img)">
+          <img [src]="'/api/images-serve/' + img" [alt]="img" loading="lazy">
+        </div>
+      }
+    </div>
+
+    @if (selectedImage()) {
+      <div class="lightbox-overlay" (click)="closeLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img [src]="'/api/images-serve/' + selectedImage()" class="lightbox-img" (click)="$event.stopPropagation()">
+      </div>
+    }
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Über mich Intro -->
+  <section class="about-preview">
+    <h2>Hallo, ich bin Nina</h2>
+    <p>Mama von drei Kindern und Fotografin mit einem besonderen Herz für Newborn-, Babybauch- und Familienfotografie.</p>
+
+    <div class="about-five-things">
+      <h3>5 Dinge über mich</h3>
+      <ol>
+        <li><strong>Mama von drei Kindern:</strong> Meine Kinder haben mir gezeigt, wie schnell die Zeit vergeht.</li>
+        <li><strong>Das echte Familienleben:</strong> Bei uns darf es auch mal laut, lustig und chaotisch sein.</li>
+        <li><strong>Gelassenheit:</strong> Mit Babys und Kindern braucht es vor allem Ruhe und Geduld – ohne Druck.</li>
+        <li><strong>Kochen & Backen:</strong> Von neuen Rezepten bis zu Küchenexperimenten wie Basilikum-Kaviar.</li>
+        <li><strong>Organisation im Blut:</strong> Durch meine frühere Arbeit als Kanzleileiterin bringe ich viel Struktur mit.</li>
+      </ol>
+    </div>
+  </section>
+</div>

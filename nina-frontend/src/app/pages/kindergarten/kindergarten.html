@@ -1,0 +1,97 @@
+<div class="page-container">
+  <section class="page-header">
+    <h2>Kindergartenfotografie in Niederösterreich</h2>
+    <p class="subtitle">Natürliche Kinderporträts in St. Andrä-Wördern & Umgebung</p>
+
+    <p class="intro-quote">
+      Ein Fototag im Kindergarten soll für alle Beteiligten eine schöne Erfahrung sein – für die Kinder, das Team und die Eltern.
+    </p>
+
+    <p>
+      Als Kindergartenfotografin ist es mir besonders wichtig, dass sich die Kinder wohlfühlen. Ohne Druck und ohne steife Posen entstehen natürliche Kinderporträts in entspannter Atmosphäre – echt, verspielt und voller Lebensfreude.
+    </p>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Vorteile für den Kindergarten -->
+  <section class="highlight-box">
+    <h3>Kein Aufwand für das Kindergarten-Team</h3>
+    <p>
+      Der Ablauf des Fototages wird im Vorfeld abgestimmt, damit der Tagesablauf der Gruppen möglichst wenig gestört wird. Organisation, Fotografie und die spätere Abwicklung übernehme ich vollständig.
+    </p>
+  </section>
+
+  <!-- Modernes Bestellsystem -->
+  <section class="ordering-system">
+    <h3>Modernes & flexibles Bestellsystem</h3>
+    <p class="system-intro">Eltern wählen ganz nach ihren Wünschen über mein Hybridsystem:</p>
+
+    <div class="info-grid">
+      <div class="info-box">
+        <h4>1. Onlinebestellung</h4>
+        <p>Eltern erhalten einen persönlichen QR-Code und können ihre Bilder bequem von zuhause aus ansehen, auswählen und bestellen.</p>
+      </div>
+
+      <div class="info-box">
+        <h4>2. Klassische Fotomappen</h4>
+        <p>Alternativ sind gedruckte Fotomappen möglich. Den Verkauf organisiere ich persönlich an einem vereinbarten Termin vor Ort – ganz ohne Aufwand für die Pädagog:innen.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Vorbereitung & Details -->
+  <section class="details-grid">
+    <div class="detail-card">
+      <h3>Vorbereitung des Fototages</h3>
+      <p>Ich unterstütze die Einrichtung im Vorfeld mit:</p>
+      <ul class="check-list">
+        <li>Persönlichem Vorgespräch zur Abstimmung</li>
+        <li>Vorbereiteten Eltern-Aushängen</li>
+        <li>Listen zur einfachen Organisation</li>
+      </ul>
+    </div>
+
+    <div class="detail-card">
+      <h3>Geschwisterbilder</h3>
+      <p>
+        Sehr gerne erstelle ich auch Geschwisterfotos – selbstverständlich auch dann, wenn ein Geschwisterkind die Einrichtung aktuell nicht besucht.
+      </p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Einsatzgebiet & Call to Action -->
+  <section class="closing-section">
+    <h3>Interesse an einem Fototag?</h3>
+    <p>
+      Ich fotografiere Kindergärten in St. Andrä-Wördern, Tulln und Umgebung sowie im gesamten Raum Niederösterreich und Wien.
+    </p>
+
+    <div class="cta-wrapper">
+      <a routerLink="/kontakt" class="cta-button">Anfrage für Kindergartenfotografie senden</a>
+    </div>
+  </section>
+</div>
+<div class="divider"></div>
+
+<section class="gallery-section">
+  <h3>Galerie – Kindergarten</h3>
+  <div class="gallery-grid">
+    @for (img of images(); track img) {
+      <div class="gallery-item" (click)="openLightbox(img)">
+        <img [src]="'/api/images-serve/' + img" [alt]="img" loading="lazy">
+      </div>
+    }
+  </div>
+
+  @if (selectedImage()) {
+    <div class="lightbox-overlay" (click)="closeLightbox()">
+      <span class="lightbox-close">&times;</span>
+      <img [src]="'/api/images-serve/' + selectedImage()" class="lightbox-img" (click)="$event.stopPropagation()">
+    </div>
+  }
+</section>

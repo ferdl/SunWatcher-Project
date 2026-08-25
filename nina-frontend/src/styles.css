@@ -1,1 +1,38 @@
-/* You can add global styles to this file, and also import other style files */
+/* Globale Galerie-Formatierung */
+.gallery-section {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.gallery-grid {
+  display: grid;
+  /* Erstellt ein flexibles Raster: Bilder passen sich der Bildschirmbreite an */
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 25px;
+}
+
+.gallery-item {
+  width: 100%;
+  aspect-ratio: 4 / 3; /* Oder 1 / 1 für quadratische Vorschaubilder */
+  overflow: hidden;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.gallery-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Verhindert, dass Bilder ihre Container sprengen */
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Schneidet Bilder sauber auf die Rastergröße zu */
+  display: block;
+}

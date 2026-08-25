@@ -1,121 +1,58 @@
-<div class="welcome-container">
+<div class="site-container">
+  <!-- Header / Navigationsleiste -->
+  <header class="site-header">
+    <div class="header-content">
+      <a routerLink="/" class="logo" (click)="closeMobileMenu()">
+        <span class="logo-title">Nina Fotografie</span>
+        <span class="logo-subtitle">St. Andrä-Wördern</span>
+      </a>
 
-  @if (isAdmin()) {
-    <div class="admin-dashboard">
-      <div class="dashboard-content">
+      <!-- Hamburger Button (nur auf Smartphones sichtbar) -->
+      <button
+        class="menu-toggle"
+        (click)="toggleMobileMenu()"
+        [class.active]="isMobileMenuOpen()"
+        aria-label="Menü umschalten">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
 
-        <button class="btn-logout" (click)="logout()" title="Abmelden">
-          Logout 🚪
-        </button>
-
-        <div class="upload-section">
-          <input type="file" (change)="onFileSelected($event)" accept="image/*" #fileInput hidden>
-
-          @if (!imagePreview()) {
-            <button class="btn-select" (click)="fileInput.click()">📸 Neues Bild für Galerie wählen</button>
-          }
-
-          @if (imagePreview()) {
-            <div class="preview-mini">
-              <img [src]="imagePreview()" alt="Vorschau">
-
-              @if (uploadProgress() !== null) {
-                <div class="mini-progress-wrapper">
-                  <div class="mini-progress-bar" [style.width.%]="uploadProgress()"></div>
-                  <span class="progress-label">{{ uploadProgress() }}%</span>
-                </div>
-              } @else {
-                <div class="preview-btns">
-                  <button class="btn-confirm" (click)="uploadImage()">🚀 Hochladen</button>
-                  <button class="btn-cancel-mini" (click)="cancelPreview()">Abbrechen</button>
-                </div>
-              }
-            </div>
-          }
-        </div>
-
-        <div class="admin-status">Admin Modus</div>
-      </div>
+      <!-- Navigationsleiste -->
+      <nav class="main-nav" [class.open]="isMobileMenuOpen()">
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="closeMobileMenu()">Startseite</a>
+        <a routerLink="/babybauch" routerLinkActive="active" (click)="closeMobileMenu()">Babybauch</a>
+        <a routerLink="/newborn" routerLinkActive="active" (click)="closeMobileMenu()">Newborn</a>
+        <a routerLink="/familie" routerLinkActive="active" (click)="closeMobileMenu()">Kinder & Familie</a>
+        <a routerLink="/kindergarten" routerLinkActive="active" (click)="closeMobileMenu()">Kindergarten</a>
+        <a routerLink="/kontakt" routerLinkActive="active" (click)="closeMobileMenu()">Kontakt</a>
+      </nav>
     </div>
-  }
-
-  <header>
-    <h1>FOTOGRAFIE NINA</h1>
-    <p class="subtitle">Augenblicke für die Ewigkeit festgehalten</p>
-    <div class="divider"></div>
   </header>
 
-  <section class="intro">
-    <h2>Willkommen</h2>
-    <p>Schön, dass du da bist. Ich liebe es, die kleinen und großen Geschichten des Lebens in Bildern zu erzählen.</p>
-  </section>
+  <!-- Dynamischer Seiteninhalt -->
+  <main class="site-main">
+    <router-outlet></router-outlet>
+  </main>
 
-  <section class="gallery">
-    @for (imgUrl of images(); track imgUrl) {
-      <div class="gallery-item">
-        <img [src]="imgUrl"
-             (click)="openLightbox(imgUrl)"
-             alt="Portfolio Bild">
-
-        @if (isAdmin()) {
-          <button
-            (click)="deleteImage(imgUrl); $event.stopPropagation()"
-            class="delete-overlay-btn"
-            title="Bild löschen">
-            🗑️
-          </button>
-        }
+  <!-- Globaler Footer -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-info">
+        <h4>Nina Fotografie</h4>
+        <p>Fotografin für Newborn, Babybauch & Familie</p>
+        <p>St. Andrä-Wördern / Tulln & Umgebung</p>
       </div>
-    } @empty {
-      <p class="empty-msg">Aktuell sind keine Bilder in der Galerie vorhanden.</p>
-    }
-  </section>
 
-  <section class="contact-section">
-    <div class="divider"></div>
-    <h2>Kontakt</h2>
-    <p>Hast du Fragen oder möchtest ein Shooting buchen? Schreib mir einfach!</p>
-
-    <form (ngSubmit)="onSubmit()" #contactForm="ngForm" class="contact-form">
-      <div class="form-group">
-        <input type="text" name="name" [(ngModel)]="contact.name" placeholder="Dein Name" required>
+      <div class="footer-links">
+        <a routerLink="/kontakt">Kontakt</a>
+        <a routerLink="/impressum">Impressum</a>
+        <a routerLink="/datenschutz">Datenschutz</a>
       </div>
-      <div class="form-group">
-        <input type="email" name="email" [(ngModel)]="contact.email" placeholder="Deine E-Mail" required>
-      </div>
-      <div class="form-group">
-        <textarea name="message" [(ngModel)]="contact.message" placeholder="Deine Nachricht" rows="5" required></textarea>
-      </div>
-      <button type="submit" [disabled]="!contactForm.form.valid" class="submit-btn">NACHRICHT SENDEN</button>
-    </form>
-  </section>
-
-  <footer>
-    <p>&copy; 2026 Fotografie Nina | <a href="#">Kontakt & Impressum</a></p>
-  </footer>
-
-</div>
-
-@if (selectedImage) {
-  <div class="lightbox-overlay" (click)="closeLightbox()">
-    <button class="close-btn" (click)="closeLightbox()">&times;</button>
-    <img [src]="selectedImage"
-         class="lightbox-image"
-         alt="Vergrößerte Ansicht"
-         (click)="$event.stopPropagation()">
-  </div>
-}
-
-@if (toastMessage()) {
-  <div class="toast-container">
-    <div class="toast-content"
-         [class.success]="toastType() === 'success'"
-         [class.error]="toastType() === 'error'">
-
-      @if (toastType() === 'success') { <span>✅</span> }
-      @else { <span>❌</span> }
-
-      {{ toastMessage() }}
     </div>
-  </div>
-}
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 Nina Fotografie. Alle Rechte vorbehalten.</p>
+    </div>
+  </footer>
+</div>

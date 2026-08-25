@@ -1,0 +1,79 @@
+<div class="page-container">
+  <section class="page-header">
+    <h2>Echte Momente – Erinnerungen für die ganze Familie</h2>
+    <p class="subtitle">Kinder wachsen unglaublich schnell</p>
+
+    <p class="intro-quote">
+      Gerade im Alltag merkt man oft gar nicht, wie sich alles verändert – bis man Jahre später ein Foto anschaut und sich plötzlich wieder an genau diesen Moment erinnert.
+    </p>
+
+    <p>
+      Bei einem Familien- oder Kinderfotoshooting entstehen natürliche Bilder voller Leben, Lachen und Nähe. Mir ist wichtig, dass sich alle wohlfühlen dürfen und nichts gestellt wirkt. Kinder dürfen spielen, lachen und einfach sie selbst sein – genau so entstehen die schönsten Erinnerungen.
+    </p>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="info-grid">
+    <div class="info-box">
+      <h3>Studio oder Outdoor</h3>
+      <p>
+        Das Fotoshooting kann entweder in meinem Studio in St. Andrä-Wördern bei Tulln oder draußen in der Natur stattfinden.
+      </p>
+      <p>
+        Gerade Outdoor-Shootings sind bei Familien sehr beliebt, weil dort besonders lebendige und natürliche Bilder entstehen. Kinder können sich frei bewegen und das Shooting fühlt sich eher wie ein kleiner Spaziergang an.
+      </p>
+    </div>
+
+    <div class="info-box">
+      <h3>Für wen geeignet?</h3>
+      <p>
+        Ein Familienshooting ist für alle Familien geeignet – egal ob mit kleinen Kindern, größeren Geschwistern oder über mehrere Generationen hinweg.
+      </p>
+      <p>
+        Gemeinsam halten wir eure Verbindung und eure wertvolle gemeinsame Zeit fest.
+      </p>
+    </div>
+  </section>
+
+  <section class="details-section">
+    <h3>Was wir gemeinsam festhalten:</h3>
+    <ul class="check-list">
+      <li>Eltern mit ihren Kindern</li>
+      <li>Geschwister zusammen</li>
+      <li>Die gesamte Familie</li>
+      <li>Einzelne, liebevolle Kinderporträts</li>
+    </ul>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="closing-section">
+    <p class="closing-quote">
+      Familienbilder sind Erinnerungen an eine Zeit, die viel zu schnell vergeht. Ich freue mich darauf, eure besonderen Momente für euch festzuhalten.
+    </p>
+
+    <div class="cta-wrapper">
+      <a routerLink="/kontakt" class="cta-button">Termin für ein Familienfotoshooting anfragen</a>
+    </div>
+  </section>
+</div>
+<div class="divider"></div>
+
+<section class="gallery-section">
+  <h3>Galerie – Kinder & Familie</h3>
+  <div class="gallery-grid">
+    @for (img of images(); track img) {
+      <div class="gallery-item" (click)="openLightbox(img)">
+        <img [src]="'/api/images-serve/' + img" [alt]="img" loading="lazy">
+      </div>
+    }
+  </div>
+
+  @if (selectedImage()) {
+    <div class="lightbox-overlay" (click)="closeLightbox()">
+      <span class="lightbox-close">&times;</span>
+      <img [src]="'/api/images-serve/' + selectedImage()" class="lightbox-img" (click)="$event.stopPropagation()">
+    </div>
+  }
+</section>

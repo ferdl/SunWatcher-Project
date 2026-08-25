@@ -1,0 +1,41 @@
+.page-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: left;
+}
+
+.subtitle {
+  color: #888;
+  font-size: 1rem;
+}
+
+.ds-section {
+  margin-bottom: 30px;
+  line-height: 1.7;
+}
+
+.ds-section h3 {
+  color: #333;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+}
+
+.ds-section h4 {
+  color: #d4af37;
+  margin-top: 18px;
+  margin-bottom: 8px;
+}
+
+.contact-card {
+  background: #fafafa;
+  padding: 15px 20px;
+  border-left: 3px solid #d4af37;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+
+.contact-card p {
+  margin: 4px 0;
+}

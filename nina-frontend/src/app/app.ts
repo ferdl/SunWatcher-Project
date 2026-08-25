@@ -1,17 +1,36 @@
-import { Component, OnInit, signal, HostListener } from '@angular/core'; // signal hinzufügen
+// src/app/app.ts
+import { Component, OnInit, signal, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import {FormsModule} from '@angular/forms';
-import { HttpEventType, HttpHeaders } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { HttpClient, HttpHeaders, HttpEventType } from '@angular/common/http';
+// 1. Router-Komponenten importieren
+import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, FormsModule], // CommonModule ist wichtig für *ngIf/*ngFor
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterOutlet,     // Ermöglicht <router-outlet>
+    RouterLink,       // Ermöglicht routerLink="..." Navigation
+    RouterLinkActive  // Ermöglicht aktive CSS-Klassen im Menü
+  ],
   templateUrl: './app.html',
   styleUrls: ['./app.css']
 })
 export class App implements OnInit {
+
+  isMobileMenuOpen = signal(false);
+
+  toggleMobileMenu() {
+    this.isMobileMenuOpen.update(val => !val);
+  }
+
+  closeMobileMenu() {
+    this.isMobileMenuOpen.set(false);
+  }
+
   // Signal für den Fortschritt (0 bis 100 oder null)
   uploadProgress = signal<number | null>(null);
   // Signal für die lokale Bildvorschau
