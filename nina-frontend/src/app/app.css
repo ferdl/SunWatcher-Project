@@ -584,6 +584,55 @@ button:disabled {
   transform: translateY(-9px) rotate(-45deg);
 }
 
+.instagram-footer-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #d62976; /* Instagram Rosa/Rot */
+  font-weight: 500;
+  transition: opacity 0.2s ease;
+}
+
+.instagram-footer-link:hover {
+  opacity: 0.8;
+}
+
+.instagram-footer-link svg {
+  vertical-align: middle;
+}
+
+.footer-social {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.instagram-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 22px;
+  /* Original Instagram Farbverlauf */
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  color: #ffffff !important;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: 30px;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(220, 39, 67, 0.3);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.instagram-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(220, 39, 67, 0.5);
+}
+
+.instagram-btn svg {
+  stroke: #ffffff;
+}
+
 /* Media Query für Mobilgeräte (unter 768px Displaybreite) */
 @media (max-width: 767px) {
   .menu-toggle {
